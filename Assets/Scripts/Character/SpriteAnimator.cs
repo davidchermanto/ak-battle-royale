@@ -15,15 +15,26 @@ public class SpriteAnimator : MonoBehaviour
     [SerializeField] private List<Sprite> attackAnimation;
     [SerializeField] private List<Sprite> dieAnimation;
 
+    private string currentAnimation = null;
+
     public void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        CallAnimation("attack");
     }
 
-
-    public void CallAnimation(string animationType)
+    public void CallAnimation(string animationType, bool force = false)
     {
+        Debug.Log("Call " + animationType);
+
+        if (animationType.Equals(currentAnimation) && !force)
+        {
+            return;
+        }
+        else
+        {
+            currentAnimation = animationType;
+        }
+
         List<Sprite> animationLoop = new List<Sprite>();
         bool looping = true;
         bool backToIdle = true;
@@ -44,6 +55,9 @@ public class SpriteAnimator : MonoBehaviour
                 animationLoop = dieAnimation;
                 looping = false;
                 backToIdle = false;
+                break;
+            default:
+                Debug.LogError("Check spelling");
                 break;
         }
 
