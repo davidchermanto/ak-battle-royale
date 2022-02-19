@@ -2,15 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Character
+{
+    public string name;
+    public int i;
+
+    public int commentCount;
+    public int commentLikes;
+
+    public float healthMax;
+    public float health;
+    public float healthRegen;
+    public float attack;
+}
+
+
 public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private SpriteAnimator spriteAnimator;
-    [SerializeField] private CharacterPositionController positionController;
+    [SerializeField] private Character character;
 
     private float speed = 2;
 
     private bool inBattle = false;
 
+    //
     private void Start()
     {
         StartCoroutine(D());
@@ -21,10 +38,13 @@ public class CharacterManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         MoveTo(new Vector3(15, 0.7f, 0));
     }
+    //
 
-    public void Setup()
+    public void Setup(Character character)
     {
+        this.character = character;
 
+        // setup sprites
     }
 
     public void MoveTo(Vector3 targetPos)
@@ -38,16 +58,19 @@ public class CharacterManager : MonoBehaviour
     {
         while (Vector3.Distance(transform.position, targetPos) > 0.05f)
         {
+            if (inBattle)
+            {
+                break;
+            }
+
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
 
             yield return new WaitForEndOfFrame();
         }
 
-        spriteAnimator.CallAnimation("idle");
-
         if (!inBattle)
         {
-
+            spriteAnimator.CallAnimation("idle");
         }
     }
 }

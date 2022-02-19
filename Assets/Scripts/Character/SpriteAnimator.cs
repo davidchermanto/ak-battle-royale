@@ -22,6 +22,11 @@ public class SpriteAnimator : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    public void Setup(string characterName)
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public void CallAnimation(string animationType, bool force = false)
     {
         Debug.Log("Call " + animationType);
