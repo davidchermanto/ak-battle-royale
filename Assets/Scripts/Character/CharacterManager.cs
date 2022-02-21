@@ -6,6 +6,7 @@ using UnityEngine;
 public class Character
 {
     public string name;
+    public string characterName;
     public int i;
 
     public int commentCount;
@@ -27,24 +28,17 @@ public class CharacterManager : MonoBehaviour
 
     private bool inBattle = false;
 
-    //
-    private void Start()
-    {
-        StartCoroutine(D());
-    }
-
-    private IEnumerator D()
-    {
-        yield return new WaitForSeconds(0.1f);
-        MoveTo(new Vector3(15, 0.7f, 0));
-    }
-    //
-
     public void Setup(Character character)
     {
         this.character = character;
+        spriteAnimator.Setup(character.characterName);
 
-        // setup sprites
+
+    }
+
+    public void Wander()
+    {
+
     }
 
     public void MoveTo(Vector3 targetPos)
@@ -72,5 +66,10 @@ public class CharacterManager : MonoBehaviour
         {
             spriteAnimator.CallAnimation("idle");
         }
+    }
+
+    public Character GetCharacter()
+    {
+        return character;
     }
 }

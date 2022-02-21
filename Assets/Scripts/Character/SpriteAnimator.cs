@@ -25,11 +25,18 @@ public class SpriteAnimator : MonoBehaviour
     public void Setup(string characterName)
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        AnimationSprites animationSprites = SpriteDatabase.Instance.GetSpritesByName(characterName);
+
+        walkingAnimation = animationSprites.walkingAnimation;
+        idleAnimation = animationSprites.idleAnimation;
+        attackAnimation = animationSprites.attackAnimation;
+        dieAnimation = animationSprites.dieAnimation;
     }
 
     public void CallAnimation(string animationType, bool force = false)
     {
-        Debug.Log("Call " + animationType);
+        //Debug.Log("Call " + animationType);
 
         if (animationType.Equals(currentAnimation) && !force)
         {
